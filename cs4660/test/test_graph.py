@@ -21,8 +21,10 @@ class TestEdge(unittest.TestCase):
 class TestAdjacencyList(unittest.TestCase):
     """Tests adjacency list implementation"""
     def setUp(self):
-        graph_1_path = "C:\\Users\\Kumar\\Downloads\\CS4660\\cs4660-fall-2017-amanish05\\cs4660\\test\\fixtures\\graph-1.txt"
-        graph_2_path = 'C:\\Users\\Kumar\\Downloads\\CS4660\\cs4660-fall-2017-amanish05\\cs4660\\test\\fixtures\\graph-2.txt'
+        graph_1_path = './test/fixtures/graph-1.txt'
+        graph_2_path = './test/fixtures/graph-2.txt'
+        #graph_1_path = "C:\\Users\\Kumar\\Downloads\\CS4660\\cs4660-fall-2017-amanish05\\cs4660\\test\\fixtures\\graph-1.txt"
+        #graph_2_path = 'C:\\Users\\Kumar\\Downloads\\CS4660\\cs4660-fall-2017-amanish05\\cs4660\\test\\fixtures\\graph-2.txt'
         self.graph_1 = graph.construct_graph_from_file(graph.AdjacencyList(), graph_1_path)
         self.graph_2 = graph.construct_graph_from_file(graph.AdjacencyList(), graph_2_path)
 
@@ -79,8 +81,10 @@ class TestAdjacencyList(unittest.TestCase):
 
 class TestAdjacencyMatrix(unittest.TestCase):
     def setUp(self):
-        graph_1_path = "C:\\Users\\Kumar\\Downloads\\CS4660\\cs4660-fall-2017-amanish05\\cs4660\\test\\fixtures\\graph-1.txt"
-        graph_2_path = 'C:\\Users\\Kumar\\Downloads\\CS4660\\cs4660-fall-2017-amanish05\\cs4660\\test\\fixtures\\graph-2.txt'
+        graph_1_path = './test/fixtures/graph-1.txt'
+        graph_2_path = './test/fixtures/graph-2.txt'
+        #graph_1_path = "C:\\Users\\Kumar\\Downloads\\CS4660\\cs4660-fall-2017-amanish05\\cs4660\\test\\fixtures\\graph-1.txt"
+        #graph_2_path = 'C:\\Users\\Kumar\\Downloads\\CS4660\\cs4660-fall-2017-amanish05\\cs4660\\test\\fixtures\\graph-2.txt'
         self.graph_1 = graph.construct_graph_from_file(graph.AdjacencyMatrix(), graph_1_path)
         self.graph_2 = graph.construct_graph_from_file(graph.AdjacencyMatrix(), graph_2_path)
 
@@ -138,8 +142,10 @@ class TestAdjacencyMatrix(unittest.TestCase):
 
 class TestObjectOriented(unittest.TestCase):
     def setUp(self):
-        graph_1_path = "C:\\Users\\Kumar\\Downloads\\CS4660\\cs4660-fall-2017-amanish05\\cs4660\\test\\fixtures\\graph-1.txt"
-        graph_2_path = 'C:\\Users\\Kumar\\Downloads\\CS4660\\cs4660-fall-2017-amanish05\\cs4660\\test\\fixtures\\graph-2.txt'
+        graph_1_path = './test/fixtures/graph-1.txt'
+        graph_2_path = './test/fixtures/graph-2.txt'
+        #graph_1_path = "C:\\Users\\Kumar\\Downloads\\CS4660\\cs4660-fall-2017-amanish05\\cs4660\\test\\fixtures\\graph-1.txt"
+        #graph_2_path = 'C:\\Users\\Kumar\\Downloads\\CS4660\\cs4660-fall-2017-amanish05\\cs4660\\test\\fixtures\\graph-2.txt'
         self.graph_1 = graph.construct_graph_from_file(graph.ObjectOriented(), graph_1_path)
         self.graph_2 = graph.construct_graph_from_file(graph.ObjectOriented(), graph_2_path)
 
