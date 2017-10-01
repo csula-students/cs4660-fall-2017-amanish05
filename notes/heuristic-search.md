@@ -2,17 +2,52 @@
 
 ## Objective
 
-* Levels of optimization
 * A* search
+* Levels of optimization
 * Exercise
 
 ## Metrics
 
-* Able to implement search against GWCF game
+* Able to implement A* search against GWCF game
 
 ## Levels of optimization
 
+We have learned how to implement BFS, DFS and Dijkstra search so far. While those
+search algorithms, given enough time and resource, will eventually find the answer,
+they are not particularly good with performance aspect.
+
+Lets say you are developing a game engine and want to host such game engine for
+other developers to build games on top of your game engine. The path finding
+API given in the game must be fast and efficient considering they will be used
+over and over again in the game. E.g. the NPCs (non player characters) will be
+using path finding API to find path almost on the daily basis.
+
+That being said, there are usually two runtime limitations:
+
+* Time
+* Space
+
+Time limitation usually refers to the memory consumption limitation. Lets say
+you are developing a path finding algorithm for [cleaning roomba](http://www.irobotweb.com/-/media/Images/Product-Pages/Roomba-Learn/Feature-Callouts/Dirt-Detect.jpg?h=320&la=en&w=320) running with
+its own hardware. A cleaning roomba usually doesn't have a lot of memory like
+your laptop. Lets say it has at most 32MB of memory. It implies your search
+algorithm cannot be using as much memory as you can. In other word, you will need
+to create less variables or cut out the function stack for the memory.
+
+On the other hand, the runtime limitation is trivial -- how fast the program
+runs. DFS, BFS and Dijkstra are all considered to be under uninformed search,
+which itself has no idea what tile is closer to goal until it finds the goal.
+
+In this section, we will be learning over the informed search (sometimes refers
+as heuristic search) to optimize the runtime as well as discuss about some other
+algorithms used to avoid high memory problem.
+
 ### Depth-limited search
+
+Depth-limited search is a modification off the Depth First Search to avoid the
+memory limit issue. Its idea is to limit the depth while searching for the
+solution so that it doesn't create an infinite loop searching for a path to
+solution.
 
 ```js
 function depthLimitedSearch(problem, limit) {
@@ -45,6 +80,10 @@ function recursiveDLS(node, problem, limit) {
 
 ### Iterative deepening depth-first search
 
+Iterative deepening Depth-First Search, on the other hand, utilizes the depth
+limit search above to search from the closest tile over to the larger depth to
+simulate this breadth first search aspect.
+
 ```js
 function iterativeDeepeningDFS(problem) {
   for (var depth = 0; depth < INTEGER.MAX_VALUE; depth ++) {
@@ -58,9 +97,11 @@ function iterativeDeepeningDFS(problem) {
 
 ### Continue back to heuristic search
 
+Golden article explaining A* search: http://www.redblobgames.com/pathfinding/a-star/introduction.html
+
 Sometimes also being called **informed search** -- one that uses problem-specific
 knowledge beyond the definition of the problem itself -- can find solutions more
-efficiently than uninformed strategy.
+efficiently than uninformed strategy like BFS, DFS and Dijkstra search.
 
 The general approach we consider is called **best-first search**. Best-first
 search is an instance of general graph-search algorithm in which a node is

@@ -4,7 +4,7 @@ This year, we will be using [Tron Battle](https://www.codingame.com/multiplayer/
 as the class final project.
 
 Tron battle is a snake-like game where you have to navigate your programming
-agent to move on the 30x20 grid and trap your opponents!
+agent to move on the 30×20 grid and trap your opponents.
 
 The goal of the game is to survive as long as possible. To do so, you may need
 to make decision on where to move in order to not trap yourself while trapping
@@ -20,8 +20,8 @@ algorithm.
 
 ## Get started
 
-1. Sign up an account at codingame.
-2. Choose your programming language and start hacking!
+1. Sign up an account at CodinGame.
+2. Choose your programming language and start hacking
 
 ## Instructions
 
@@ -48,12 +48,14 @@ This implies it is up to you to track any state you need, this includes board st
 
 ## Strategy guide
 
-With the board state above, you are ready to do some computation!
+With the board state above, you are ready to do some computation.
 
 First step (most important step) of the game is to not die!
 
 That implies your board state need to be correct and when you move, you cannot move
 onto any "wall" (includes the spaces already being moved to and edge).
 
-Here is a very good starting point for you to implement some strategy of the game: 
-http://csclub.uwaterloo.ca/contest/xiao_strategy.php
+Here are a couple good articles on implementing the strategy:
+
+* https://tech.io/playgrounds/243/voronoi-diagrams/what-are-voronoi-diagrams
+* https://www.a1k0n.net/2010/03/04/google-ai-postmortem.html
