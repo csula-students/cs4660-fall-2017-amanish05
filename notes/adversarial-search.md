@@ -3,18 +3,20 @@
 * Adversarial search
 * Decision Theory
 * Minimax
-* Homework 3 Announcement
+* Alpha-Beta pruning
 
 # Metrics/Desired Outcomes
 
 * Apply Minimax to solve simple game
+* Apply alpha-beta to improve minimax performance
 
 ## Adversarial Search
 
 In this chapter, we will cover competitive environments, in which the agents'
-goals are in conflict, giving rise to adversarialsearch problems -- often known as games.
+goals are in conflict, giving rise to adversarial search problems -- often
+known as games.
 
-Mathematical game theory, a branch of economics, views any multiagent environment
+Mathematical game theory, a branch of economics, views any multi-agent environment
 as a game, provided that the impact of each agent on the other is "significant",
 regardless of whether the agents are cooperative or competitive. In AI, the most
 common games are of a rather specialized kind -- what game theorists call deterministic, 
@@ -31,9 +33,9 @@ actions,. With exception of robot soccer, these physical games have not abstract
 too much interest in the AI community.
 
 We begin with a definition of the optimal move and an algorithm for finding it.
-We then look at techniques for choosing a good move when time is limitted. 
+We then look at techniques for choosing a good move when time is limited. 
 Pruning allows us to ignore portions of the search tree that make no difference 
-to the final choice, and heuristic evluattion functions allow us to approximate
+to the final choice, and heuristic evaluation functions allow us to approximate
 the true utility of a state without doing a complete search.
 
 A game can be formally defined as kind of search problem with the following elements:
@@ -43,41 +45,45 @@ A game can be formally defined as kind of search problem with the following elem
 * Actions(s): Returns the state of legal moves in a state
 * Result(s, a): The transition model, which defines the result of a move
 * Terminal-test(s): A terminal test, which is true when the game is over and false otherwise
-* Utility(s, p): a utlity function (also called an objective function or payoff function), 
+* Utility(s, p): a utility function (also called an objective function or payoff function), 
 define the final numeric value for a game that ends in terminal state s for a player p. 
 In chess, the outcome is a win, loss, or draw, with values of 1, 0, or 1/2. Some games 
 have a wider variety of possible outcomes.
 
-A zero-sum game is (confingly) defined as one where the total payoff to all players 
+A zero-sum game is (confusingly) defined as one where the total payoff to all players 
 is the same for every instance of the game. Chess is zero-sum because every game
 has payoff of either 0 + 1, 1 + 0 or 1/2 + 1/2. "Constant-sum" would have been a
 better term, but zero-sum is traditional and makes sense if you imagine each 
 player is charged an entry fee of 1/2.
+
+An really good web page explaining what zero-sum game is: http://ncase.me/trust/
 
 ## Minmax
 
 * Used in decision theory/game theory
 * Under the assumption of both players (you and your opponent(s)) play their best moves
     * Minimize the loss at worst case
-    * Opponent **minimize** the score
-    * You **maximize** the score
+    * Opponent tries to **minimize** the score
+    * You try to **maximize** the score
 * Originally covers only turn-based 2 players game
-* This has been adapted to general games now
-* Again relies on a **evaluate** function
-* Eventually *tree traversal*
+    * But certainly can be used in multi-agent environment
+* Relies on a **Utility** (evaluate) function
+* Similar to a *tree traversal*
 
-## Picture worthes a thousand words
+### Picture worths a thousand words
 
 ![Minimax graph](imgs/minimax-example.png)
+![More minimax example](imgs/min-max-tree.png)
 
-## Examples
+### Examples of Minimax
 
 1. Tic-tac-toe
 2. Zero sum number game
 
-## Pseudocode
+### Pseudocode
 
-** [From Wikipedia](https://en.wikipedia.org/wiki/Minimax)**
+[From Wikipedia](https://en.wikipedia.org/wiki/Minimax)
+
 ```js
 function minimax(node, depth, maximizingPlayer)
     if depth = 0 or node is a terminal node
@@ -100,6 +106,7 @@ minimax(origin, depth, TRUE)
 ```
 
 **Our modification to use Graph interface**
+
 ```js
 function minimax(graph, sourceNode, depth, maximizingPlayer) {
     // usually being optimized in a way to compute even before
@@ -107,16 +114,16 @@ function minimax(graph, sourceNode, depth, maximizingPlayer) {
     if (depth = 0 || sourceNode is a leaf) {
         return evaluate(soureNode.gameState); // return a number
     }
-    
+
     if (maximizingPlayer) {
-        bestValue = Number.MAX_VALUE; // positive infinite
+        bestValue = Number.MIN_VALUE;
         for (node in graph.neighbors(sourceNode)) {
             value = minimax(node, graph, depth - 1, false);
             bestValue = Math.max(bestValue, value);
         }
         return bestValue;
     } else {
-        bestValue = Number.MIN_VALUE; // negative infinite
+        bestValue = Number.MAX_VALUE;
         for (node in graph.neighbors(sourceNode)) {
             value = minimax(node, graph, depth - 1, true);
             bestValue = Math.min(bestValue, value);
@@ -129,60 +136,32 @@ function minimax(graph, sourceNode, depth, maximizingPlayer) {
 minimax(graph, startingNode, 3, TRUE); 
 ```
 
-# Alpha-Beta Pruning
+## Alpha-Beta Pruning
 
-## Objectives
-
-* Comprehend Alpha-Beta Pruning 
-
-## Metrics/Desired Outcomes
-
-* Implement alpha-beta pruning example
-
-### References
-
+Interactive web page to see alpha-beta pruning:
 http://inst.eecs.berkeley.edu/~cs61b/fa14/ta-materials/apps/ab_tree_practice/
 
-### Adversarial Search
+The MINIMAX algorithm properly evaluates a player’s best move when considering the opponent's counter moves.
+This information is not while leveraged when generating tree.
 
-We now consider something called `Adversarial Search`.  If `Min` and `Max` are adversaries so they will compete with each other at each move by selecting the best `option` while considering the opponent's next move.
-
-![Minimax Example](imgs/min-max-tree.png)
-
-Max would like to select *a1* is the optimal choice because highest value when it is MIN's turn to go.
-
-### Pruning Concept
-
-We want to ignore tree path that does not contribute to the final result one way or another.
-
-## Alpha-Beta
-
-The MINIMAX algorithm properly evaluates a player’s best move when considering the opponent’s countermoves.  This information is not while leveraged when generating tree.
-
-Downside: even if a potentially bad move is ahead, minmax does not eliminate the sub-tree from consideration.  It does so with a consistent strategy to eliminate unproductive sub-tree from future search.
+Downside: even if a potentially bad move is ahead, minimax does not eliminate the sub-tree from consideration. 
+It does so with a consistent strategy to eliminate unproductive sub-tree from future search.
 
 ![Alpha Beta Tree](imgs/alpha-beta-tree.png)
 
-(a) The first leaf below B has the value 3. Hence, B, which is a MIN node, has a value of at most 3. 
-
-(b) The second leaf below B has a value of 12; MIN would avoid this move, so the value of B is still at most 3. 
-
-(c) The third leaf below B has a value of 8; we have seen all B’s successor states, so the value of B is exactly 3. Now, we can infer that the value of the root is at least 3, because MAX has a choice worth 3 at the root. 
-
-(d) The first leaf below C has the value 2. Hence, C,which is a MIN node,has a value of at most2. But we know that B is worth 3, so MAX would never choose C. Therefore, there is no point in looking at the other successor states of C. This is an example of alpha–beta pruning. 
-
-(e) The first leaf below D has the value 14, so D is worth at most 14. This is still higher than MAX’s best alternative (i.e., 3), so we need to keep exploring D’s successor states. Notice also that we now have bounds on all of the successors of the root, so the root’s value is also at most 14. 
-
-(f) The second successor of D is worth 5, so again we need to keep exploring. The third successor is worth 2, so now D is worth exactly 2. MAX’s decision at the root is to move to B, giving a value of 3.
+1. The first leaf below B has the value 3. Hence, B, which is a MIN node, has a value of at most 3. 
+ The second leaf below B has a value of 12; MIN would avoid this move, so the value of B is still at most 3. 
+2. The third leaf below B has a value of 8; we have seen all B’s successor states, so the value of B is exactly 3. Now, we can infer that the value of the root is at least 3, because MAX has a choice worth 3 at the root. 
+3. The first leaf below C has the value 2. Hence, C,which is a MIN node,has a value of at most2. But we know that B is worth 3, so MAX would never choose C. Therefore, there is no point in looking at the other successor states of C. This is an example of alpha–beta pruning. 
+4. The first leaf below D has the value 14, so D is worth at most 14. This is still higher than MAX’s best alternative (i.e., 3), so we need to keep exploring D’s successor states. Notice also that we now have bounds on all of the successors of the root, so the root’s value is also at most 14. 
+5. The second successor of D is worth 5, so again we need to keep exploring. The third successor is worth 2, so now D is worth exactly 2. MAX’s decision at the root is to move to B, giving a value of 3.
 
 ![Alpha Beta General](imgs/alpha-beta-general.png)
 
 Generally speaking: if *m* is better than *n* for, then we will never see *n* so path leading up to *n* can be eliminated.
-
 Back to adversarial search:
 
 * Alpha is the value of the best (i.e., highest-value) choice we have found so far at any choice point along the path for MAX.
-
 * Beta is the value of the best (i.e., lowest-value) choice we have found so far at any choice point along the path for MIN.
 
 ### Algorithm Summary
@@ -191,9 +170,9 @@ Strategy: Alpha-beta recursively search the game tree and tracks two values: alp
 
 ![Alpha Beta Summary](imgs/alpha-beta-summary.png)
 
-* As long as alpha < beta, the branch is consider an opportunity.
-* Alpha is the lowerbound game states.
-* If alpha is -INF if no information is available.  
+* As long as alpha is less than beta, the branch is consider an opportunity.
+* Alpha is the lower-bound game states.
+* If alpha is -INF if no information is available.
 * The higher alpha, the better the move.
 * If alpha is +INF then a winning move is found.
 
@@ -229,7 +208,7 @@ public class AlphaBetaEvaluation implements IEvaluation {
      IGameMove move = it.next();
      // Recursively evaluate position.
      move.execute(state);
-     MoveEvaluation me = alphabeta (ply-1, opponent, player, -beta, -alpha);
+     MoveEvaluation me = alphabeta(ply-1, opponent, player, -beta, -alpha);
      move.undo(state);
      // If improved upon alpha, keep track of this move.
      if (-me.score > alpha) {
@@ -243,7 +222,6 @@ public class AlphaBetaEvaluation implements IEvaluation {
    return best;
  }
 }
-
 ```
 
 ### Min-Max and Alpha-Beta Comparison
