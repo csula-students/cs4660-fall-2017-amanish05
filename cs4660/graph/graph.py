@@ -22,6 +22,7 @@ A Graph has following methods:
 """
 
 from io import open
+import math
 from operator import itemgetter
 
 def construct_graph_from_file(graph, file_path):
@@ -139,7 +140,15 @@ class AdjacencyList(object):
 
 
     def distance(self, node_1, node_2):
-        pass
+        if node_1 in self.adjacency_list:
+            edges = self.adjacency_list[node_1]
+            for edge in edges:
+                if(edge.to_node == node_2):
+                    return edge.weight
+        return math.inf
+
+    def __str__(self):
+        return '(List {})'.format(self.adjacency_list)
 
 class AdjacencyMatrix(object):
     def __init__(self):
@@ -233,7 +242,9 @@ class AdjacencyMatrix(object):
 
 
     def distance(self, node_1, node_2):
-        pass
+        if node_1 in self.nodes:
+            return self.adjacency_matrix[self.__get_node_index(node_1)][self.__get_node_index(node_2)]
+        return math.inf
 
     def __get_node_index(self, node):
         return self.nodes.index(node)
@@ -246,11 +257,8 @@ class ObjectOriented(object):
         self.nodes = []
 
     def adjacent(self, node_1, node_2):
-        #print("Tets1")
         if node_1 in self.nodes:
-            #print("Tets2")
             for edge in self.edges:
-                #print("Tets3")
                 if edge.from_node == node_1 and edge.to_node == node_2:
                     return True
         return False
@@ -294,4 +302,8 @@ class ObjectOriented(object):
         return False
 
     def distance(self, node_1, node_2):
-        pass
+        if node_1 in self.nodes:
+            for edge in self.edges:
+                if(edge.from_node == node_1 and edge.to_node == node_2):
+                    return edge.weight
+        return math.inf
