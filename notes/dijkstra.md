@@ -2,7 +2,7 @@
 
 ## Objectives
 
-* Homework 1 solution and discussion
+* Homework 1 Q & A
 * Bot saving princess solution and discussion
 * Best-first(uniform cost) search algorithm
 * Understand Dijkstra's algorithm
@@ -12,19 +12,19 @@
 ## Metrics/Desired Outcomes
 
 * Able to implement Dijkstra's algorithm
-* Able to apply DijkStra's algorithm to find shortest path for weighted graph
+* Able to apply Dijkstra's algorithm to find shortest path for weighted graph
 
 ### Homework 1 Common Problems
 
 1. General
     * Definition of `adjacent(x, y)`  
     > Adjacent of x and y means that there is edge from x to y and there may not be edge from y to x.
-1. AdjacencyList
-    * Utilize `equals` method (that can be used in `contain`)
-2. AdjacencyMatrix
+1. AdjacencyListGraph
+    * Forget to include the edge value in the dictionary value
+2. AdjacencyMatrixGraph
     * Forgot to adjust the size of `nodes` and `adjacencyMatrix`
     * Assigning 1 to as edge value (regardless of the actual edge value from graph-2)
-    * `Id` and `index` confusion
+    * `data` and `index` confusion
 
 ### Bot saving princess
 

@@ -58,5 +58,4 @@ class SimpleFileTestCase(unittest.TestCase):
         self.assertEqual(-5, self.simple_file.get_min(4))
 
     def test_sum(self):
-        """test_sum tests to see if the file can retrieve sum value"""
         self.assertEqual(36, self.simple_file.get_sum(1))
