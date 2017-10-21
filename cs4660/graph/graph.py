@@ -159,6 +159,9 @@ class AdjacencyMatrix(object):
         # as separate list of nodes
         self.nodes = []
 
+    def __str__(self):
+        return '(Matrix {})'.format(self.adjacency_matrix)
+
     def adjacent(self, node_1, node_2):
         if node_1 not in self.nodes or node_2 not in self.nodes:
             return False
@@ -255,6 +258,9 @@ class ObjectOriented(object):
         # implement your own list of edges and nodes
         self.edges = []
         self.nodes = []
+
+    def __str__(self):
+        return '(ObjectOriented {})'.format(self.nodes)
 
     def adjacent(self, node_1, node_2):
         if node_1 in self.nodes:
