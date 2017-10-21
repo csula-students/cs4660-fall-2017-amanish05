@@ -62,9 +62,12 @@ def parse_grid_file(graph, file_path):
             current_tile = Tile(j, i, grid[i][j])
 
             if current_tile.symbol == "##":
-                continue  # obstacle tile not suppose to have edge
+                continue
 
-            # check that adjacent tiles are valid, order is N -> E -> W -> S
+            if (j, i + 1) in tiles_node:
+                lower_tile = tiles_node[(j, i + 1)]
+                if lower_tile.symbol != "##":
+                    graph.add_edge(Edge(Node(current_tile), Node(lower_tile), 1))
 
             if (j, i - 1) in tiles_node:
                 upper_tile = tiles_node[(j, i - 1)]
@@ -81,10 +84,6 @@ def parse_grid_file(graph, file_path):
                 if left_tile.symbol != "##":
                     graph.add_edge(Edge(Node(current_tile), Node(left_tile), 1))
 
-            if (j, i + 1) in tiles_node:
-                lower_tile = tiles_node[(j, i + 1)]
-                if lower_tile.symbol != "##":
-                    graph.add_edge(Edge(Node(current_tile), Node(lower_tile), 1))
     return graph
 
 def convert_edge_to_grid_actions(edges):
@@ -107,6 +106,5 @@ def convert_edge_to_grid_actions(edges):
             tile1 = edge.from_node.data
             tile2 = edge.to_node.data
             path = path + directions[(tile1.x - tile2.x, tile1.y - tile2.y)]
-
-    print("Path is: " + path)
+    #print("Path is: " + path)
     return path
